@@ -1,0 +1,113 @@
+/* --- Base Styles --- */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: var(--theme-color);
+  }
+  
+  .header-background {
+    background-color: var(--theme-color);
+    color: #fff;
+  }
+  
+  .theme-btn {
+    background-color: var(--theme-color);
+    color: #fff;
+    border: none;
+  }
+  
+  .theme-btn:hover {
+    opacity: 0.9;
+  }
+  
+  h1, h3 {
+    color: #333;
+  }
+  
+  footer {
+    background: #343a40;
+    color: #ccc;
+  }
+  
+  /* --- Carousel Styles --- */
+  
+  .carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* --- Card Styles --- */
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card {
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .badge {
+    margin-top: 5px;
+  }
+  
+  /* --- Pagination Styles --- */
+  
+  .pagination .page-link {
+    color: var(--theme-color);
+  }
+  
+  .pagination .active .page-link {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    color: #fff;
+  }
+  
+  /* --- Responsive --- */
+  
+  @media (max-width: 768px) {
+    .card-img-top {
+      height: 150px;
+    }
+  
+    .carousel-item img {
+      height: 200px;
+    }
+  }
+  
+  /* --- Modal --- */
+  
+  .modal-body img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+  }
+  
+  /* --- City Themes --- */
+  
+  .nanjing-theme {
+    --theme-color: #b31b1b;
+  }
+  
+  .oulu-theme {
+    --theme-color: #0066cc;
+  }
+  

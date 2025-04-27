@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LocalVibe - City Explorer</title>
+  <link href="styles.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="nanjing-theme">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">LocalVibe</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#top">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#explore">Explore</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header id="top" class="text-center mt-4">
+  <div id="headerBackground" class="header-background">
+    <h1 class="py-3">Welcome to LocalVibe - <span id="cityName">Nanjing</span></h1>
+  </div>
+  <p class="mt-3">Discover hidden gems and vibrant culture of Nanjing and Oulu. Cafes, parks, museums, and more await!</p>
+</header>
+
+<!-- Carousel -->
+<div id="cityCarousel" class="carousel slide container mb-4" data-bs-ride="carousel">
+  <div class="carousel-inner" id="carouselInner">
+    <!-- Carousel images will be dynamically inserted by JS -->
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#cityCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#cityCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- Search, Filter, Switch -->
+<section class="container text-center">
+  <h3>Find Your Perfect Spot</h3>
+  <div class="row g-3 align-items-center justify-content-center my-3">
+    <div class="col-auto">
+      <button id="cityToggle" class="btn theme-btn">Switch to Oulu</button>
+    </div>
+    <div class="col-auto">
+      <select id="filterSelect" class="form-select">
+        <option value="all">All Categories</option>
+        <option value="cafe">Cafes</option>
+        <option value="museums">Museums</option>
+        <option value="park">Parks</option>
+        <option value="historical">Historical</option>
+        <option value="scenic">Scenic</option>
+        <option value="cultural">Cultural</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <input id="searchInput" type="text" class="form-control" placeholder="Search places...">
+    </div>
+  </div>
+</section>
+
+<!-- Explore Places -->
+<section class="container mb-5" id="explore">
+  <h3 class="text-center mb-4">Explore Places</h3>
+  <div id="cardContainer" class="row row-cols-2 row-cols-md-5 g-4"></div>
+  <nav>
+    <ul id="pagination" class="pagination justify-content-center mt-4"></ul>
+  </nav>
+</section>
+
+<!-- About Section -->
+<section id="about" class="container mb-5">
+  <h3 class="text-center mb-4">About LocalVibe</h3>
+  <p class="text-center">LocalVibe is a platform to discover hidden gems, explore city cultures, and connect with other explorers. Whether you're a traveler, student, or local, find your vibe here!</p>
+</section>
+
+<!-- Footer -->
+<footer class="text-center py-3">
+  © 2025 LocalVibe Team. All rights reserved.
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="placeModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modalCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" id="modalCarouselInner">
+            <!-- 动态插入图片 -->
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+        <p id="modalDescription" class="mt-3"></p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
