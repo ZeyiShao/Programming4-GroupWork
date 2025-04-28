@@ -1,5 +1,3 @@
-// Minimal change version: fix category multi-tag support
-
 const data = {
   Nanjing: {
     themeColor: "#b31b1b",
