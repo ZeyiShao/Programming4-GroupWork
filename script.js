@@ -1,6 +1,7 @@
 const data = {
   Nanjing: {
     themeColor: "#b31b1b",
+    video: "assets/nanjing-intro-nanjing.mp4",
     carousel: [
       "assets/Foding Tower.png",
       "assets/qinhuai-river.png",
@@ -9,6 +10,11 @@ const data = {
       "assets/Wutong Avenue02.png",
       "assets/Xuanwu Lake02.png"
     ],
+    highlights: [
+    { src: "assets/qinhuai-river.png", alt: "Qinhuai River" },
+    { src: "assets/Foding Tower.png", alt: "Foding Tower" },
+    { src: "assets/Xuanwu Lake01.png", alt: "Xuanwu Lake" }
+  ],
     places: [
       {
           title: "Confucius Temple",
@@ -71,17 +77,61 @@ const data = {
   },
   Oulu: {
     themeColor: "#0066cc",
+    video: "assets/oulu-intro.mp4",
     carousel: [
-      "assets/oulu-park.png",
-      "assets/oulu-gallery.png",
-      "assets/oulu-river.png"
+      "assets/oulu04.png",
+      "assets/oulu03.png",
+      "assets/oulu02.png",
+      "assets/oulu01.png"
     ],
-    places: Array.from({ length: 60 }, (_, i) => ({
-      title: `Oulu Place ${i + 1}`,
-      image: `https://picsum.photos/seed/ou${i}/300/200`,
-      description: `Description for Oulu Place ${i + 1}`,
-      category: ["Cafe", "Museum", "Park", "Historical", "Scenic"][i % 5]
-    }))
+     highlights: [
+    { src: "assets/oulu03.png", alt: "Oulu Scenery" },
+    { src: "assets/nallikari02.png", alt: "Nallikari Beach" },
+    { src: "assets/tietomaa02.png", alt: "Tietomaa Science Center" }
+  ],
+    places: [
+      {
+        title: "Toripolliisi",
+        image: ["assets/OIP01.png",
+          "assets/OIP02.png"],
+       description: "Standing proudly in Oulu's Market Square, the Toripolliisi (Market Policeman) is a beloved bronze statue that represents the city's welcoming spirit and historical charm. Created by sculptor Kaarlo Mikkonen, it has become an iconic photo spot for visitors and a local symbol of safety and friendliness. The statue honors the old market police officers who once patrolled the square to ensure peace and order. Whether day or night, Toripolliisi stands as a timeless figure, attracting smiles, photos, and curiosity from everyone who passes by.",
+       category: "Historical"
+      },
+      {
+            title: "Oulu City Library",
+            image: "assets/oulu-library.png",
+            description: "Tietomaa Science Center in Oulu is Finland's first science center, offering an exciting world of discovery through interactive exhibits and science-based entertainment. Visitors can explore physics, biology, technology, and space through hands-on displays designed to spark curiosity across all ages. The center also features a giant panoramic movie theater, observation tower, and special seasonal exhibitions. It is especially popular among families and students, promoting fun learning experiences and STEM education in an inspiring environment. A visit to Tietomaa promises both fascination and fun for everyone.",
+            category: ["museums", "Scenic"],
+      },
+      {
+            title: "Nallikari Beach",
+            image: ["assets/nallikari01.png"],
+            description: "Known as the 'Riviera of the North,' Nallikari Beach offers stunning coastal views, golden sands, and a perfect setting for summer relaxation or peaceful winter walks. Located just a few kilometers from the Oulu city center, it is a favorite getaway for locals and tourists alike. Activities range from swimming, volleyball, and sunbathing in summer to snowshoeing and northern lights watching in winter. The adjacent spa hotel, restaurants, and beautiful walking paths add to its charm, making it a year-round destination for serenity and scenic beauty.",
+            category: ["Scenic", "Relax"],
+            
+       },
+       {
+            title: "Tietomaa Science Center",
+            image: "assets/tietomaa01.png",
+            description: "Tietomaa Science Center in Oulu is Finland's first science center, offering an exciting world of discovery through interactive exhibits and science-based entertainment. Visitors can explore physics, biology, technology, and space through hands-on displays designed to spark curiosity across all ages. The center also features a giant panoramic movie theater, observation tower, and special seasonal exhibitions. It is especially popular among families and students, promoting fun learning experiences and STEM education in an inspiring environment. A visit to Tietomaa promises both fascination and fun for everyone.",
+            category: ["museums", "Interactive"],
+           
+       },
+       {
+            title: "Oulu Market Hall",
+            image: "assets/market-hall.png",
+            description: "Located in the heart of Oulu near the waterfront, the Oulu Market Hall (Kauppahalli) is a historic red-brick building filled with tradition, flavor, and local spirit. Since 1901, it has hosted vendors selling fresh seafood, local delicacies, handmade crafts, and souvenirs. Its charming old-world interior and friendly atmosphere make it a must-visit place for experiencing authentic Finnish market culture. Whether you're tasting smoked fish, buying reindeer sausage, or browsing artisan goods, the market hall invites you to connect with Oulu's culinary and cultural heritage.",
+            category: ["Cultural", "Shopping"],
+           
+       },
+       {
+            title: "University of Oulu",
+            image: "assets/oulu-university.png",
+            description: "Founded in 1958, the University of Oulu is one of Finland’s leading academic institutions known for innovation, international collaboration, and high-quality education. With a strong focus on science, technology, health, and humanities, the university serves over 13,000 students in a beautiful campus setting surrounded by nature. It offers cutting-edge research facilities and a vibrant student community. Whether you're a local or an international student, the University of Oulu provides an enriching academic experience supported by a safe, inclusive, and forward-thinking environment.",
+            category: ["Educational", "Modern"],
+          
+       }
+    ]
   }
 };
 
@@ -115,14 +165,33 @@ function updateTitle() {
   switchBtn.textContent = `Switch to ${currentCity === "Nanjing" ? "Oulu" : "Nanjing"}`;
 }
 
+function renderHighlights() {
+  const container = document.getElementById("highlightContainer");
+  container.innerHTML = ""; // 清空原内容
+
+  const highlights = data[currentCity].highlights;
+  highlights.forEach(item => {
+    const col = document.createElement("div");
+    col.className = "col";
+    col.innerHTML = `<img src="${item.src}" class="img-fluid rounded" alt="${item.alt}">`;
+    container.appendChild(col);
+  });
+}
+
 function updateCarousel() {
   const images = data[currentCity].carousel;
   carouselInner.innerHTML = "";
   images.forEach((imgSrc, idx) => {
     const div = document.createElement("div");
     div.className = `carousel-item${idx === 0 ? " active" : ""}`;
-    div.innerHTML = `<img src="${imgSrc}" alt="City Image" class="d-block w-100 rounded" style="object-fit: cover; max-height: 300px;">`;
-    carouselInner.appendChild(div);
+    div.innerHTML = `
+  <img src="${imgSrc}" alt="City Image" class="d-block w-100 rounded" style="object-fit: cover; max-height: 300px;">
+  <div class="carousel-caption d-none d-md-block">
+    <h5>${currentCity} Slide ${idx + 1}</h5>
+    <p>Explore the charm of ${currentCity}!</p>
+  </div>
+`;
+  carouselInner.appendChild(div);
   });
 }
 
@@ -156,6 +225,16 @@ function renderCards() {
     col.querySelector(".card").addEventListener("click", () => {
       modalTitle.textContent = place.title;
 modalDescription.textContent = place.description;
+
+function updateHeroVideo() {
+  const sourceEl = document.getElementById("heroSource");
+  const videoEl  = document.getElementById("heroVideo");
+
+  // 改变 source 的 src
+  sourceEl.src = data[currentCity].video;
+  // 通知 video 元素加载新源
+  videoEl.load();
+}
 
 // 清空小轮播
 const modalCarouselInner = document.getElementById("modalCarouselInner");
@@ -204,9 +283,11 @@ switchBtn.addEventListener("click", () => {
   searchInput.value = "";
   filterSelect.value = "all";
   updateTheme();
-  updateTitle();
-  updateCarousel();
-  renderCards();
+updateTitle();
+updateCarousel();
+renderCards();
+renderHighlights(); 
+updateHeroVideo();
 });
 
 filterSelect.addEventListener("change", (e) => {
@@ -222,7 +303,54 @@ searchInput.addEventListener("input", (e) => {
 });
 
 // Init
+// Init
 updateTheme();
 updateTitle();
 updateCarousel();
 renderCards();
+renderHighlights();   
+updateHeroVideo();    
+
+document.getElementById("registrationForm").addEventListener("submit", function(e) {
+  e.preventDefault(); // 阻止默认提交行为
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const city = document.getElementById("city");
+
+  let valid = true;
+
+  // 清除旧的错误标记
+  [name, email, city].forEach(input => {
+    input.classList.remove("is-invalid");
+  });
+
+  // 检查每个字段是否为空
+  [name, email, city].forEach(input => {
+    if (!input.value.trim()) {
+      input.classList.add("is-invalid");
+      valid = false;
+    }
+  });
+
+  // 邮箱格式验证
+  const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  if (!emailPattern.test(email.value)) {
+    email.classList.add("is-invalid");
+    valid = false;
+  }
+
+  // 如果都合法，可以提交（这里用 alert 模拟）
+  if (valid) {
+    alert("Form submitted successfully!");
+  }
+});
+
+const carouselEl = document.getElementById("cityCarousel");
+const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carouselEl);
+
+carouselEl.addEventListener("mouseenter", () => {
+  bsCarousel.pause();
+});
+carouselEl.addEventListener("mouseleave", () => {
+  bsCarousel.cycle();
+});
