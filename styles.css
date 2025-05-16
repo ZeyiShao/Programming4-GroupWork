@@ -1,113 +1,175 @@
 /* --- Base Styles --- */
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f8f9fa;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar {
-    background-color: var(--theme-color);
-  }
-  
-  .header-background {
-    background-color: var(--theme-color);
-    color: #fff;
-  }
-  
-  .theme-btn {
-    background-color: var(--theme-color);
-    color: #fff;
-    border: none;
-  }
-  
-  .theme-btn:hover {
-    opacity: 0.9;
-  }
-  
-  h1, h3 {
-    color: #333;
-  }
-  
-  footer {
-    background: #343a40;
-    color: #ccc;
-  }
-  
-  /* --- Carousel Styles --- */
-  
-  .carousel-inner {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .carousel-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  
-  /* --- Card Styles --- */
-  
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background-color: var(--theme-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-background {
+  background-color: var(--theme-color);
+  color: #fff;
+}
+
+.theme-btn {
+  background-color: var(--theme-color);
+  color: #fff;
+  border: none;
+}
+
+.theme-btn:hover {
+  opacity: 0.9;
+}
+
+h1, h3 {
+  color: #333;
+}
+
+footer {
+  background: #343a40;
+  color: #ccc;
+}
+
+/* --- Carousel Styles --- */
+
+.carousel-inner {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* --- Card Styles --- */
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.badge {
+  margin-top: 5px;
+}
+
+/* --- Pagination Styles --- */
+
+.pagination .page-link {
+  color: var(--theme-color);
+}
+
+.pagination .active .page-link {
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
+  color: #fff;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 768px) {
   .card-img-top {
+    height: 150px;
+  }
+
+  .carousel-item img {
     height: 200px;
-    object-fit: cover;
   }
-  
-  .card {
-    transition: transform 0.3s ease-in-out;
-    cursor: pointer;
-  }
-  
-  .card:hover {
-    transform: scale(1.02);
-  }
-  
-  .badge {
-    margin-top: 5px;
-  }
-  
-  /* --- Pagination Styles --- */
-  
-  .pagination .page-link {
-    color: var(--theme-color);
-  }
-  
-  .pagination .active .page-link {
-    background-color: var(--theme-color);
-    border-color: var(--theme-color);
-    color: #fff;
-  }
-  
-  /* --- Responsive --- */
-  
-  @media (max-width: 768px) {
-    .card-img-top {
-      height: 150px;
-    }
-  
-    .carousel-item img {
-      height: 200px;
-    }
-  }
-  
-  /* --- Modal --- */
-  
-  .modal-body img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-  }
-  
-  /* --- City Themes --- */
-  
-  .nanjing-theme {
-    --theme-color: #b31b1b;
-  }
-  
-  .oulu-theme {
-    --theme-color: #0066cc;
-  }
-  
+}
+
+/* --- Modal --- */
+
+.modal-body img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+/* --- City Themes --- */
+
+.nanjing-theme {
+  --theme-color: #b31b1b;
+}
+
+.oulu-theme {
+  --theme-color: #0066cc;
+}
+
+/* --- Grid Section --- */
+.row-cols-md-3 img {
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.row-cols-md-3 img:hover {
+  transform: scale(1.03);
+}
+
+/* --- Form Styling --- */
+form input:focus,
+form select:focus {
+  border-color: var(--theme-color);
+  box-shadow: 0 0 0 0.25rem rgba(179, 27, 27, 0.25);
+}
+
+form button {
+  background-color: var(--theme-color);
+  border: none;
+}
+
+form button:hover {
+  opacity: 0.9;
+}
+
+/* --- Video Styling --- */
+video {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+}
+.rating span {
+  font-size: 1.2rem;
+}
+#vueExperience .img-fluid {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* --- Top Highlights 图片统一样式 --- */
+#highlightContainer img {
+  width: 100%;              /* 填满父容器 */
+  height: 200px;            /* 固定高度（你可根据需要调整） */
+  object-fit: cover;        /* 等比例裁剪，超出部分隐藏 */
+  border-radius: 0.5rem;    /* 圆角效果 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 微弱阴影，提升立体感 */
+  transition: transform 0.3s ease-in-out;
+}
+
+#highlightContainer img:hover {
+  transform: scale(1.03);  /* 鼠标悬停放大 */
+}
+
+.is-invalid {
+  border: 2px solid red !important;
+}
