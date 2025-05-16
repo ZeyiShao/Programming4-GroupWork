@@ -10,7 +10,7 @@
 <body class="nanjing-theme">
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" role="navigation">
   <div class="container">
     <a class="navbar-brand" href="#">LocalVibe</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -27,12 +27,20 @@
 </nav>
 
 <!-- Header -->
-<header id="top" class="text-center mt-4">
+<header id="top" class="text-center mt-4" role="banner">
   <div id="headerBackground" class="header-background">
     <h1 class="py-3">Welcome to LocalVibe - <span id="cityName">Nanjing</span></h1>
   </div>
   <p class="mt-3">Discover hidden gems and vibrant culture of Nanjing and Oulu. Cafes, parks, museums, and more await!</p>
 </header>
+
+<!-- Hero Video -->
+<section class="container my-4" role="region" aria-label="City Introduction Video">
+  <video id="heroVideo" controls width="100%">
+    <source id="heroSource" src="assets/city-intro.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
 
 <!-- Carousel -->
 <div id="cityCarousel" class="carousel slide container mb-4" data-bs-ride="carousel">
@@ -63,6 +71,7 @@
         <option value="historical">Historical</option>
         <option value="scenic">Scenic</option>
         <option value="cultural">Cultural</option>
+        <option value="Relax">Relax</option>
       </select>
     </div>
     <div class="col-auto">
@@ -72,22 +81,207 @@
 </section>
 
 <!-- Explore Places -->
-<section class="container mb-5" id="explore">
+<main class="container mb-5" id="explore" role="main">
   <h3 class="text-center mb-4">Explore Places</h3>
-  <div id="cardContainer" class="row row-cols-2 row-cols-md-5 g-4"></div>
+  <article>
+    <div id="cardContainer" class="row row-cols-2 row-cols-md-5 g-4"></div>
+  </article>
   <nav>
     <ul id="pagination" class="pagination justify-content-center mt-4"></ul>
   </nav>
+</main>
+<!--  Scenic Spot Interactive Experience Area -->
+<section id="vueExperience" class="container mb-5">
+  <div id="app" class="p-4 border rounded shadow-sm bg-white">
+    <h3 class="text-center mb-3">🌍 Travel recommendations</h3>
+
+    <!-- The user enters the nickname and identity -->
+    <div class="mb-3">
+      <label class="form-label">Your name:</label>
+      <input v-model="username" type="text" class="form-control" placeholder="Enter your name">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Your identity:</label>
+      <select v-model="role" class="form-select">
+        <option value="">Please select the identity.</option>
+        <option value="student">Student</option>
+        <option value="visitor">Tourist</option>
+      </select>
+    </div>
+
+    <!-- Realize the welcome message -->
+    <div class="alert mt-3" :class="{
+        'alert-info': role === 'visitor',
+        'alert-success': role === 'student',
+        'alert-secondary': role === ''
+      }">
+      <p v-if="role === 'student'">👋 Hello, student {{ username }}，Here are some recommended scenic spots for you that allow you to study and relax at the same time!</p>
+      <p v-else-if="role === 'visitor'">🧳 Welcome tourists {{ username }}，Come and take a look at the most worth-visiting local attractions!</p>
+      <p v-else>Please enter your nickname and select your identity to get a recommendation!</p>
+    </div>
+
+    <!-- Control whether to display recommendations -->
+    <button class="btn btn-outline-primary mb-3" @click="showPlaces = !showPlaces">
+      {{ showPlaces ? 'Hidden recommendation' : 'Display recommended scenic spots' }}
+    </button>
+
+    <!-- Render recommended scenic spots -->
+    <div v-show="showPlaces">
+      <div v-for="place in filteredRecommended" :key="place.title" class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img :src="place.image" class="img-fluid rounded-start" :alt="place.title">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ place.title }}</h5>
+              <p class="card-text">{{ place.description }}</p>
+              <span class="badge bg-secondary me-1" v-for="cat in place.category" :key="cat">{{ cat }}</span>
+              <div class="mt-2">
+                <!-- "Collect Button" -->
+                <button class="btn btn-outline-danger btn-sm me-2" @click="toggleFavorite(place)">
+                  <span v-if="favorites.includes(place.title)">❤️ Collected</span>
+                  <span v-else>🤍 Not collected</span>
+                </button>
+              
+                <!-- Star rating -->
+                <div class="rating d-inline">
+                  <span 
+                    v-for="star in 5" 
+                    :key="star"
+                    @click="ratePlace(place, star)"
+                    style="cursor: pointer;"
+                  >
+                    <span :style="{ color: place.userRating >= star ? 'gold' : '#ccc' }">★</span>
+                  </span>
+                  <small class="ms-2 text-muted">评分：{{ place.userRating || '未评分' }}</small>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Grid Display Section -->
+<section class="container mb-5" role="region" aria-label="Top Highlights">
+  <h3 class="text-center mb-4">Top Highlights</h3>
+  <div id="highlightContainer" class="row row-cols-1 row-cols-md-3 g-4">
+    <!-- JS 动态插入图片 -->
+  </div>
+</section>
+
+
+<!-- Registration Form -->
+<section class="container mb-5" role="form" aria-label="User Registration Form">
+  <h3 class="text-center mb-4">Join the LocalVibe Community</h3>
+  <form id="registrationForm" class="mx-auto" style="max-width: 500px;">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" id="name" class="form-control" required placeholder="Enter your full name">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" id="email" class="form-control" required placeholder="Enter a valid email">
+    </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City of Interest</label>
+      <select id="city" class="form-select" required>
+        <option value="">Select a city</option>
+        <option value="Nanjing">Nanjing</option>
+        <option value="Oulu">Oulu</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Register</button>
+  </form>
 </section>
 
 <!-- About Section -->
-<section id="about" class="container mb-5">
+<section id="about" class="container mb-5" role="contentinfo">
   <h3 class="text-center mb-4">About LocalVibe</h3>
   <p class="text-center">LocalVibe is a platform to discover hidden gems, explore city cultures, and connect with other explorers. Whether you're a traveler, student, or local, find your vibe here!</p>
 </section>
 
+<!-- FAQ Accordion Section 插入在 about 下方 -->
+<section class="container mb-5">
+  <h3 class="text-center mb-3">Frequently Asked Questions</h3>
+  <div class="accordion" id="faqAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="q1">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
+          What is LocalVibe?
+        </button>
+      </h2>
+      <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+        <div class="accordion-body">LocalVibe is a city explorer app helping users discover Nanjing and Oulu.</div>
+      </div>
+    </div>
+    <!-- 继续复制生成 q2 ~ q6 项 -->
+     <div class="accordion-item">
+  <h2 class="accordion-header" id="q2">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
+      Which cities are included in LocalVibe?
+    </button>
+  </h2>
+  <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">Currently, we provide curated content for Nanjing (China) and Oulu (Finland).</div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="accordion-item">
+  <h2 class="accordion-header" id="q3">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
+      Is LocalVibe suitable for students?
+    </button>
+  </h2>
+  <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">Yes! Students can find quiet study spots, libraries, and cultural places to explore.</div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="accordion-item">
+  <h2 class="accordion-header" id="q4">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a4">
+      How often is the content updated?
+    </button>
+  </h2>
+  <div id="a4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">Content is updated each semester to include new recommendations and highlights.</div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="accordion-item">
+  <h2 class="accordion-header" id="q5">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a5">
+      Can I contribute my own recommendations?
+    </button>
+  </h2>
+  <div id="a5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">Future versions of LocalVibe may allow users to submit favorite places and reviews.</div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="accordion-item">
+  <h2 class="accordion-header" id="q6">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a6">
+      Do I need to register to use LocalVibe?
+    </button>
+  </h2>
+  <div id="a6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+    <div class="accordion-body">No, but registering lets you save favorites, get personalized suggestions, and more.</div>
+  </div>
+</div>
+  </div>
+</section>
+
 <!-- Footer -->
-<footer class="text-center py-3">
+<footer class="text-center py-3" role="contentinfo">
   © 2025 LocalVibe Team. All rights reserved.
 </footer>
 
@@ -113,7 +307,6 @@
         </div>
         <p id="modalDescription" class="mt-3"></p>
       </div>
-      
     </div>
   </div>
 </div>
@@ -121,6 +314,164 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const { createApp } = Vue;
+
+  createApp({
+    data() {
+      return {
+        username: '',
+        role: '',
+        showPlaces: false,
+        favorites: [],
+        currentCity: 'Nanjing', 
+        recommended: [
+          {
+            title: "Night view of Qinhuai River",
+            image: "assets/qinhuai-river.png",
+            description: "The night by the Qinhuai River is as beautiful as a painting and is a popular spot for tourists to take photos",
+            category: ["Scenic", "Historical"],
+            userRating: 0,
+            for: "visitor",
+            city: "Nanjing"
+          },
+          {
+            title: "Xuanwu Lake Park",
+            image: "assets/Xuanwu Lake01.png",
+            description: "A city oasis suitable for students to go jogging in the morning, watch the sunset and enjoy cherry blossoms.",
+            category: ["Scenic", "Relax"],
+            userRating: 0,
+            for: "student",
+            city: "Nanjing"
+          },
+          {
+            title: "Confucius Temple Cultural District",
+            image: "assets/confucius-temple.png",
+            description: "A traditional district that combines history with the hustle and bustle of the city and is rich in cultural atmosphere.",
+            category: ["Cultural", "Shopping"],
+            userRating: 0,
+            for: "visitor",
+            city: "Nanjing"
+          },
+          {
+            title: "Nanjing Library",
+            image: "assets/library.jpg",
+            description: "Students love the study paradise the most. It has a quiet environment and a rich collection of books.",
+            category: ["Quiet", "Study"],
+            userRating: 0,
+            for: "student",
+            city: "Nanjing"
+          },
+          {
+            title: "Wutong Avenue",
+            image: "assets/Wutong Avenue02.png",
+            description: "A street lined with paulownia trees. Strolling along it, one can enjoy the leisurely atmosphere.",
+            category: ["Historical"],
+            userRating: 0,
+            for: "visitor",
+            city: "Nanjing"
+          },
+          {
+            title: "Nanjing Pearl Spring",
+            image: "assets/Pearl Spring01.png",
+            description: "The lake is like a pearl. If I could fly in the air, I would see the eyes of the beauty goddess.",
+            category: ["Scenic"],
+            userRating: 0,
+            for: "visitor",
+            city: "Nanjing"
+          },
+          {
+            title: "Oulu City Library",
+            image: "assets/oulu-library.jpg",
+            description: "A peaceful study place near the waterfront, ideal for students to concentrate on reading.",
+            category: ["Study", "Modern"],
+            userRating: 0,
+            for: "student",
+            city: "Oulu"
+          },
+          {
+            title: "Nallikari Beach",
+            image: "assets/nallikari.jpg",
+            description: "A beautiful beach perfect for visitors to relax, sunbathe, or take long walks.",
+            category: ["Scenic", "Relax"],
+            userRating: 0,
+            for: "visitor",
+            city: "Oulu"
+          },
+          {
+            title: "Tietomaa Science Center",
+            image: "assets/tietomaa.jpg",
+            description: "An interactive science museum perfect for curious students.",
+            category: ["museums", "Interactive"],
+            userRating: 0,
+            for: "student",
+            city: "Oulu"
+          },
+          {
+            title: "Oulu Market Hall",
+            image: "assets/market-hall.jpg",
+            description: "A must-visit cultural hub offering local food and souvenirs.",
+            category: ["Cultural", "Shopping"],
+            userRating: 0,
+            for: "visitor",
+            city: "Oulu"
+          },
+          {
+            title: "University of Oulu",
+            image: "assets/oulu-university.jpg",
+            description: "One of Finland's leading research universities, the University of Oulu offers a tranquil and modern campus environment that inspires learning, innovation, and exploration. Ideal for students seeking both academic excellence and natural beauty.",
+            category: ["Educational", "Modern"],
+            userRating: 0,
+            for: "student",
+            city: "Oulu"
+          }
+        ]
+      };
+    },
+    computed: {
+      filteredRecommended() {
+        return this.recommended.filter(place =>
+          place.for === this.role && place.city === this.currentCity
+        );
+      }
+    },
+    methods: {
+      toggleFavorite(place) {
+        const index = this.favorites.indexOf(place.title);
+        if (index > -1) {
+          this.favorites.splice(index, 1);
+        } else {
+          this.favorites.push(place.title);
+        }
+      },
+      ratePlace(place, rating) {
+        place.userRating = rating;
+      }
+    },
+    mounted() {
+      const toggleBtn = document.getElementById("cityToggle");
+      const citySpan = document.getElementById("cityName");
+
+      toggleBtn.addEventListener("click", () => {
+        if (this.currentCity === "Nanjing") {
+          this.currentCity = "Oulu";
+          citySpan.textContent = "Oulu";
+          document.body.className = "oulu-theme";
+          toggleBtn.textContent = "Switch to Nanjing";
+        } else {
+          this.currentCity = "Nanjing";
+          citySpan.textContent = "Nanjing";
+          document.body.className = "nanjing-theme";
+          toggleBtn.textContent = "Switch to Oulu";
+        }
+      });
+    }
+  }).mount("#app");
+</script>
+
+
+
 
 </body>
 </html>
